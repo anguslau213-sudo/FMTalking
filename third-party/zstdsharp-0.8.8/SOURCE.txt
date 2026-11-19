@@ -1,0 +1,12 @@
+ZstdSharp.Port 0.8.8
+https://www.nuget.org/packages/ZstdSharp.Port/0.8.8
+Source commit: 2cd0c019693bc786a5fe5c3be94e107b24e7267e
+
+ZstdSharp.Port.0.8.8.nupkg SHA-256:
+F6797192DEEBF4535F0601C2273E750DA0C02062E30A3E4A3C4011B9AC22403A
+
+ZstdSharp.dll from lib/net6.0/ SHA-256:
+31641F2A2ADC518146848B60FBF0E158C26755FB14FD1F798CA037610A408204
+
+LICENSE.txt: https://github.com/oleg-st/ZstdSharp/blob/0.8.8/LICENSE
+Zstandard-LICENSE.txt: https://github.com/facebook/zstd/blob/v1.5.7/LICENSE

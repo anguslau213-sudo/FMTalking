@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>10</LangVersion>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <IsPackable>false</IsPackable>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <GameDir Condition="'$(GameDir)' == ''">$(FM27_GAME_DIR)</GameDir>
+    <GameDir Condition="'$(GameDir)' == '' and '$(OS)' == 'Windows_NT'">$(MSBuildProgramFiles32)\Steam\steamapps\common\Football Manager 27</GameDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <GameAssembly Include="BepInEx.Core;BepInEx.Unity.IL2CPP;Il2CppInterop.Runtime;0Harmony">
+      <Folder>core</Folder>
+    </GameAssembly>
+    <GameAssembly Include="Il2Cppmscorlib;UnityEngine.CoreModule;UnityEngine.ImageConversionModule;UnityEngine.UIElementsModule;UnityEngine.TextCoreTextEngineModule;UnityEngine.TextRenderingModule;UnityEngine.IMGUIModule;UnityEngine.InputLegacyModule;Unity.InputSystem;SI.Core;SI.Input;SI.UI;SI.Bindable;SI.Interop;FM.GamePlugin;FM.UI">
+      <Folder>interop</Folder>
+    </GameAssembly>
+    <Reference Include="@(GameAssembly)">
+      <HintPath>$(GameDir)\BepInEx\%(GameAssembly.Folder)\%(GameAssembly.Identity).dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ZstdSharp">
+      <HintPath>..\third-party\zstdsharp-0.8.8\ZstdSharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Target Name="CheckGameReferences" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="'$(GameDir)' == '' or !Exists('$(GameDir)')"
+           Text="FM 27 game directory not found. Pass -p:GameDir=... or set FM27_GAME_DIR." />
+    <Error Condition="!Exists('%(Reference.HintPath)') and '%(Reference.Private)' == 'false'"
+           Text="Missing build reference: %(Reference.HintPath). Use a BepInEx IL2CPP installation with generated FM 27 interop assemblies." />
+  </Target>
+</Project>
