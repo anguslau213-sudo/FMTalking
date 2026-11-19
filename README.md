@@ -1,14 +1,22 @@
 # FMTalking · 足球经理 27 / Football Manager 27
 
-《足球经理 27》（FM27）的可玩对话模组雏形。 A playable dialogue mod prototype for Football Manager 27 (FM27, part of the FM series).
+**FMTalking 把本机 Codex 或兼容的 AI 后端接入《足球经理 27》（FM27）。** 在游戏里和球员、职员及高层自然交流，对话可以改变亲密度等游戏数值，也可以改变生涯中的承诺。
+
+**Connect Codex or a compatible AI backend to Football Manager 27 (FM27, part of the FM series).** Talk naturally to players, staff, and executives in-game. Those conversations can change game values such as affinity and affect career events such as player promises.
 
 [English](#english) · [简体中文](#简体中文)
 
 ## English
 
-FMTalking is a playable dialogue prototype for Football Manager 27. It adds an **交流 (Talk)** menu to Manager Center where you can chat with players, staff, and club executives from your current career.
+### How it works
 
-The first preview lets you build relationships, ask your personal assistant to introduce a player, and discuss waiving a position or role promise the game has recorded. Board funding is experimental. Try it with a career you know, then change the dialogue, relationship rules, or pacing to fit the way you play. The fun is seeing what different players make of the same starting point.
+Send a message from **Manager Center → Talk**. FMTalking reads the relevant context from your current career and sends it to your chosen backend, which writes the character's reply and can propose an action. The mod checks that action against the active career and its own rules, then applies supported changes in FM. For example, a player can agree to waive an eligible position or role promise, and the mod can remove that promise from the game's records.
+
+**Codex connects directly.** FMTalking calls the signed-in Codex CLI on your computer in the background. Other agents and models can provide replies through an **OpenAI-compatible Chat Completions endpoint**. If your agent needs a bridge to expose that endpoint, set up the bridge first, then select **Local model** for a local endpoint or **Remote API** for a remote one.
+
+**Let your local agent help with setup.** Give an agent with access to your local files the installer ZIP and ask it to extract the package, read `AGENTS.md`, and help install FMTalking and test your chosen backend. The guide covers the game folder, the BepInEx loader, and what to check if the connection fails.
+
+This is a playable prototype. You can also ask your personal assistant for a player introduction. Board funding is experimental. Try it with a career you know, then adapt the dialogue, relationship rules, or pacing to suit the way you play.
 
 **[Download FMTalking 1.0 from Releases](../../releases)** · **[Installation guide](docs/INSTALL.md)** · **[Guide for local coding agents](AGENTS.md)**
 
@@ -21,7 +29,7 @@ The first preview lets you build relationships, ask your personal assistant to i
 
 In **Talk → Settings → Interface Language**, choose **Follow Game**, **简体中文**, **English**, **日本語**, or **한국어**. The setting changes the mod's controls and labels. Player names, game data, and saved messages retain their original text.
 
-FMTalking runs independently of academy, FMLife, and portrait packs. If you use a local coding agent to install or troubleshoot, ask it to read `AGENTS.md` first. The release includes the guide at the archive root and in the installed plugin folder. Upgrade, save-history recovery, and uninstall instructions are in the [installation guide](docs/INSTALL.md).
+FMTalking runs independently of academy, FMLife, and portrait packs. Upgrade, save-history recovery, and uninstall instructions are in the [installation guide](docs/INSTALL.md).
 
 ### Compatibility and save data
 
@@ -38,8 +46,8 @@ Start with a separate local copy of your career when testing changes to in-game 
 
 | Mode | Setup |
 | --- | --- |
-| Codex on this computer | Use an already authenticated local Codex installation. The model ID is optional. |
-| Local model | Start an OpenAI-compatible Chat Completions server. Enter its loopback endpoint, model ID, and any key the server requires. |
+| Codex on this computer | FMTalking calls your signed-in Codex CLI in the background. The model ID is optional. |
+| Local model | Start a local model service or agent bridge with an OpenAI-compatible Chat Completions endpoint. Enter its loopback endpoint, model ID, and any key the service requires. |
 | Remote API | Enter the provider's HTTPS endpoint, model ID, and API key. Tests and chats can count toward provider usage. |
 
 The chosen connection receives the dialogue context needed for a reply, which can include in-game character and relationship information and relevant club finance summaries. Choose a model service that runs entirely on your computer if you want those details to remain local.
@@ -68,7 +76,15 @@ FMTalking is released under the [MIT License](LICENSE). The [third-party notices
 
 ## 简体中文
 
-FMTalking 1.0 是《足球经理 27》的首个可试玩预览版。在「经理中心 → 交流」里，你可以跟当前生涯里的球员、职员和俱乐部高层聊天、发展关系，请个人助理介绍球员，或和球员协商放弃游戏已记录的位置或角色承诺。董事会注资是实验功能。你可以从熟悉的存档玩起，再按自己的喜好改对话提示词、关系规则和交流节奏。
+### 它是怎么运行的
+
+在「经理中心 → 交流」里发一条消息。FMTalking 会读取当前生涯中与对话有关的信息，交给你选用的 AI 后端，让它以游戏人物的身份回复，并在适合的时候提出行动。模组按当前游戏状态和规则核验行动，再在 FM 中执行支持的变更。比如球员同意放弃一项符合条件的位置或角色承诺，模组就可以从游戏记录中移除那条承诺。
+
+**本机 Codex 可以直接连接。** FMTalking 会在后台调用这台电脑上已登录的 Codex 命令行。其他智能体和模型可以通过**兼容 OpenAI Chat Completions 的接口**接入。如果你用的智能体需要适配器来提供这个接口，可以先搭好适配器，再按地址选「本地模型」或「远程 API」。
+
+**也可以请本地智能体帮你安装。** 把安装包交给能访问本机文件的智能体，请它解压并先阅读 `AGENTS.md`，再帮你安装 FMTalking、检查加载器，并测试你选择的连接。
+
+这是一个可玩的雏形。你可以请个人助理介绍球员，也可以试验董事会注资。欢迎从熟悉的存档玩起，再按自己的喜好调整提示词、关系规则和交流节奏。
 
 **[下载 FMTalking 1.0](../../releases)** · **[完整安装说明](docs/INSTALL.md)** · **[本地智能体指南](AGENTS.md)**
 
@@ -81,7 +97,7 @@ FMTalking 1.0 是《足球经理 27》的首个可试玩预览版。在「经理
 
 在「交流 → 设置 → 界面语言」中，可以选择跟随游戏、简体中文、English、日本語或한국어。此设置影响模组的菜单、按钮和标签。球员姓名、游戏数据和历史消息会按原文显示。
 
-FMTalking 可以独立运行。青训、FMLife 和头像包均为选装。如需本地智能体辅助安装或排错，请先让它阅读 `AGENTS.md`。安装包根目录和安装后的插件目录都留有这份指南。升级、恢复对话历史和停用模组请见[完整安装说明](docs/INSTALL.md)。
+FMTalking 可以独立运行。青训、FMLife 和头像包均为选装。升级、恢复对话历史和停用模组请见[完整安装说明](docs/INSTALL.md)。
 
 ### 兼容范围和存档
 
@@ -98,8 +114,8 @@ FMTalking 可以独立运行。青训、FMLife 和头像包均为选装。如需
 
 | 模式 | 设置方法 |
 | --- | --- |
-| 本机 Codex | 使用已登录的本机 Codex。模型 ID 可以留空。 |
-| 本地模型 | 在这台电脑启动兼容 OpenAI Chat Completions 的模型服务，填写回环地址、模型 ID。服务要求密钥时也请填写。 |
+| 本机 Codex | 在后台调用已登录的本机 Codex 命令行。模型 ID 可以留空。 |
+| 本地模型 | 启动提供兼容 OpenAI Chat Completions 接口的本地模型服务或智能体适配器，填写回环地址、模型 ID。服务要求密钥时也请填写。 |
 | 远程 API | 填写服务商提供的 HTTPS 接口、模型 ID 和 API 密钥。连接测试和对话可能计入服务商用量。 |
 
 所选连接会收到生成回复所需的对话上下文，可能包括游戏人物、关系信息，以及相关场景下可核实的俱乐部财务摘要。如果希望这些内容留在本机，请选择完全在本机运行的模型服务。
